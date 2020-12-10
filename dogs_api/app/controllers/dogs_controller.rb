@@ -5,4 +5,13 @@ class DogsController < ApplicationController
     render json: @dogs
   end
 
+  def create
+    @dog = Dog.create(
+      name: params[:name],
+      age: params[:age]
+    )
+
+    render json: @dog
+  end
+
 end
