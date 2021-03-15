@@ -6,12 +6,20 @@ class DogsController < ApplicationController
   end
 
   def create
-    @dog = Dog.create(
-      name: params[:name],
-      age: params[:age]
-    )
-
-    render json: @dog
+    @dog = Dog.new dog_params
+    
+    if @dog.valid?
+      @dog.save
+      render json: @dog
+    else 
+      render json: @dog.errors, status: :unprocessable_entity
+    end
+  end
+  
+  private
+  
+  def dog_params
+    params.require(:dog).permit :name, :age
   end
 
 end
